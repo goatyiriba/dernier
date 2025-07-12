@@ -52,8 +52,6 @@ import EmployeeHelp from "./EmployeeHelp";
 
 import DeveloperDocs from "./DeveloperDocs";
 
-import Home from "./Home";
-
 import Surveys from "./Surveys";
 
 import PublicSurvey from "./PublicSurvey";
@@ -141,8 +139,6 @@ const PAGES = {
     EmployeeHelp: EmployeeHelp,
     
     DeveloperDocs: DeveloperDocs,
-    
-    Home: Home,
     
     Surveys: Surveys,
     
@@ -254,8 +250,6 @@ function PagesContent() {
                 <Route path="/EmployeeHelp" element={<EmployeeHelp />} />
                 
                 <Route path="/DeveloperDocs" element={<DeveloperDocs />} />
-                
-                <Route path="/Home" element={<Home />} />
                 
                 <Route path="/Surveys" element={<Surveys />} />
                 
