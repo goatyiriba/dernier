@@ -251,6 +251,8 @@ function PagesContent() {
                 
                 <Route path="/DeveloperDocs" element={<DeveloperDocs />} />
                 
+                <Route path="/Home" element={<Home />} />
+                
                 <Route path="/Surveys" element={<Surveys />} />
                 
                 <Route path="/PublicSurvey" element={<PublicSurvey />} />
