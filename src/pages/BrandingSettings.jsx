@@ -74,7 +74,7 @@ export default function BrandingSettings() {
   const loadSettings = async () => {
     setIsLoading(true);
     try {
-      const settingsList = await AppSettings.list();
+      const settingsList = await AppSettings.getAll();
       let currentSettings = settingsList.find(s => s.is_active);
       
       if (!currentSettings && settingsList.length > 0) {

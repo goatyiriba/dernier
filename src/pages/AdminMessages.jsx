@@ -55,9 +55,9 @@ export default function AdminMessages() {
   const loadData = async () => {
     try {
       const [messagesData, conversationsData, employeesData] = await Promise.all([
-        Message.list("-created_date"),
-        Conversation.list("-last_message_at"),
-        Employee.list()
+        Message.getAll(),
+        Conversation.getAll(),
+        Employee.getAll()
       ]);
 
       setMessages(messagesData);

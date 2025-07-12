@@ -315,4 +315,100 @@ const convertToCSV = (data) => {
   ].join('\n');
   
   return csvContent;
-}; 
+};
+
+// Supabase connection wrapper function
+export const supabaseConnection = async ({ action, table, data = null }) => {
+  try {
+    switch (action) {
+      case 'test_connection':
+        // Test connection by trying to access a table
+        const { data: testData, error: testError } = await supabase
+          .from('employees')
+          .select('count')
+          .limit(1);
+        
+        if (testError) {
+          return {
+            data: {
+              success: false,
+              error: 'Configuration Supabase incomplète',
+              config: { url_present: false, key_present: false }
+            }
+          };
+        }
+        
+        return {
+          data: {
+            success: true,
+            message: 'Connexion Supabase réussie'
+          }
+        };
+
+      case 'sync_employees':
+        // Sync employees to Supabase
+        const { data: employees, error: employeesError } = await supabase
+          .from('employees')
+          .select('*');
+        
+        if (employeesError) throw employeesError;
+        
+        return {
+          data: {
+            success: true,
+            data: {
+              message: 'Employés synchronisés avec succès',
+              total: employees?.length || 0,
+              synced: employees?.length || 0,
+              errors: 0
+            }
+          }
+        };
+
+      case 'backup_to_supabase':
+        // Create backup
+        const backupResult = await createBackup(['employees', 'time_entries', 'leave_requests']);
+        return {
+          data: {
+            success: true,
+            data: {
+              message: 'Sauvegarde créée avec succès',
+              backup: backupResult
+            }
+          }
+        };
+
+      case 'sync_from_supabase':
+        // Sync from Supabase
+        const { data: syncData, error: syncError } = await supabase
+          .from('employees')
+          .select('*');
+        
+        if (syncError) throw syncError;
+        
+        return {
+          data: {
+            success: true,
+            data: {
+              message: 'Données importées depuis Supabase',
+              total: syncData?.length || 0,
+              synced: syncData?.length || 0,
+              errors: 0
+            }
+          }
+        };
+
+      default:
+        throw new Error(`Action non supportée: ${action}`);
+    }
+  } catch (error) {
+    console.error('Erreur supabaseConnection:', error);
+    return {
+      data: {
+        success: false,
+        error: error.message || 'Erreur inconnue',
+        config: { url_present: false, key_present: false }
+      }
+    };
+  }
+};

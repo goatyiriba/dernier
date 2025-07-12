@@ -388,6 +388,128 @@ export const Message = {
   }
 };
 
+export const Conversation = {
+  async getAll() {
+    const { data, error } = await supabase
+      .from('conversations')
+      .select('*')
+      .order('last_message_at', { ascending: false });
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async getById(id) {
+    const { data, error } = await supabase
+      .from('conversations')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async create(conversationData) {
+    const { data, error } = await supabase
+      .from('conversations')
+      .insert(conversationData)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async update(id, updates) {
+    const { data, error } = await supabase
+      .from('conversations')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async delete(id) {
+    const { error } = await supabase
+      .from('conversations')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+    return true;
+  },
+
+  // Alias for compatibility
+  list(orderBy = '-last_message_at') {
+    return this.getAll();
+  }
+};
+
+export const AppSettings = {
+  async getAll() {
+    const { data, error } = await supabase
+      .from('app_settings')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async getById(id) {
+    const { data, error } = await supabase
+      .from('app_settings')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async create(settingsData) {
+    const { data, error } = await supabase
+      .from('app_settings')
+      .insert(settingsData)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async update(id, updates) {
+    const { data, error } = await supabase
+      .from('app_settings')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async delete(id) {
+    const { error } = await supabase
+      .from('app_settings')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+    return true;
+  },
+
+  // Alias for compatibility
+  list(orderBy = '-created_at') {
+    return this.getAll();
+  }
+};
+
 export const Survey = {
   async getAll() {
     const { data, error } = await supabase
@@ -485,6 +607,8 @@ export const all = {
   PerformanceReview,
   TimeEntry,
   Announcement,
+  Conversation,
+  AppSettings,
   Document,
   Project,
   Task,
