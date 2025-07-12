@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Employee, User } from "@/api/entities";
+import { Employee, AuthService } from "@/api/supabaseEntities";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

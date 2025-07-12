@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { motion, AnimatePresence } from "framer-motion";
-import { Message, Conversation, Employee } from "@/api/entities";
+import { Message, Employee } from "@/api/supabaseEntities";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { createPageUrl } from "@/utils";

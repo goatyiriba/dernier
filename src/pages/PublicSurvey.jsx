@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Survey, SurveyResponse } from "@/api/entities";
+import { Survey } from "@/api/supabaseEntities";
+import { SurveyResponse } from "@/api/supabaseEntities";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

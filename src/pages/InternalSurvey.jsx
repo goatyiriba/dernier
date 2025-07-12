@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Survey, SurveyResponse, User, Employee } from "@/api/entities";
+import { Survey, SurveyResponse, AuthService, Employee } from "@/api/supabaseEntities";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -61,7 +61,7 @@ export default function InternalSurvey() {
       }
 
       // Vérifier l'authentification
-      const user = await User.me();
+      const user = await AuthService.me();
       setCurrentUser(user);
 
       // Trouver l'employé

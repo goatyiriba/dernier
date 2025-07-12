@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User } from '@/api/entities';
+import { AuthService } from '@/api/supabaseEntities';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -48,7 +48,7 @@ export default function PendingApprovalPage() {
 
   const loadUserData = async () => {
     try {
-      const user = await User.me();
+      const user = await AuthService.me();
       console.log("PendingApproval - User data:", user);
       setCurrentUser(user);
       updateWaitingTime(user);
@@ -92,7 +92,7 @@ export default function PendingApprovalPage() {
   const checkAutoRedirect = async () => {
     // Vérifier si l'utilisateur a été approuvé
     try {
-      const user = await User.me();
+      const user = await AuthService.me();
       if (user.is_active) {
         navigate(createPageUrl("Home"));
       }
@@ -103,7 +103,7 @@ export default function PendingApprovalPage() {
 
   const handleAutoLogout = async () => {
     try {
-      await User.logout();
+      await AuthService.logout();
       navigate(createPageUrl("Home"));
     } catch (error) {
       console.error("Error during auto logout:", error);
@@ -113,7 +113,7 @@ export default function PendingApprovalPage() {
 
   const handleManualLogout = async () => {
     try {
-      await User.logout();
+      await AuthService.logout();
       navigate(createPageUrl("Home"));
     } catch (error) {
       console.error("Error during logout:", error);

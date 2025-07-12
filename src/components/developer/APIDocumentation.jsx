@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Globe, Code, Key, Send, Copy, Check, Database, Zap } from "lucide-react";
+import { Employee, AuthService, TimeEntry } from "@/api/supabaseEntities";
 
 export default function APIDocumentation({ copyToClipboard, copiedCode }) {
   const [selectedCategory, setSelectedCategory] = useState("crud");
@@ -355,7 +356,7 @@ export default function APIDocumentation({ copyToClipboard, copiedCode }) {
                   <div className="relative">
                     <pre className="bg-gray-800 text-green-400 p-4 rounded-lg text-sm overflow-x-auto">
 {`// Import des entités
-import { Employee, User, TimeEntry } from "@/api/entities";
+import { Employee, AuthService, TimeEntry } from "@/api/supabaseEntities";
 
 // Utilisation basique
 const employees = await Employee.list();

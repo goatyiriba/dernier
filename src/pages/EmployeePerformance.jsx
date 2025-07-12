@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { PerformanceReview, Employee, User } from "@/api/entities";
+import { PerformanceReview, Employee, AuthService } from "@/api/supabaseEntities";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -87,7 +87,7 @@ export default function EmployeePerformance() {
     try {
       setIsLoading(true);
       
-      const user = await User.me();
+      const user = await AuthService.me();
       setCurrentUser(user);
 
       const [reviewsData, employeesData] = await Promise.all([

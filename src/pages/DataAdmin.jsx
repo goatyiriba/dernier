@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Employee, User, TimeEntry, LeaveRequest, Announcement, Document, Badge, Notification } from "@/api/entities";
+import { Employee, AuthService, TimeEntry, LeaveRequest, Announcement, Document, Badge, Notification } from "@/api/supabaseEntities";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge as UIBadge } from "@/components/ui/badge";
@@ -45,7 +45,7 @@ export default function DataAdmin() {
 
   const entities = {
     employees: { name: "Employees", entity: Employee, icon: Users },
-    users: { name: "Users", entity: User, icon: Users },
+    users: { name: "Users", entity: AuthService, icon: Users },
     timeEntries: { name: "Time Entries", entity: TimeEntry, icon: Database },
     leaveRequests: { name: "Leave Requests", entity: LeaveRequest, icon: Database },
     announcements: { name: "Announcements", entity: Announcement, icon: Database },
@@ -78,7 +78,7 @@ export default function DataAdmin() {
         notificationsData
       ] = await Promise.all([
         Employee.list(),
-        User.list(),
+        AuthService.list(),
         TimeEntry.list(),
         LeaveRequest.list(),
         Announcement.list(),

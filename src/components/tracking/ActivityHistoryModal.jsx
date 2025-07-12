@@ -20,7 +20,7 @@ import { fr } from 'date-fns/locale';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 import UserStatusIndicator from './UserStatusIndicator';
-import { getUserActivityHistory } from '@/api/functions';
+import { getUserActivityHistory } from '@/api/supabaseFunctions';
 
 export default function ActivityHistoryModal({ employee, isOpen, onClose }) {
   const [activityData, setActivityData] = useState(null);

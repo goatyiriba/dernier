@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Announcement, Employee, User, AnnouncementReadStatus, Notification as NotificationEntity } from '@/api/entities';
+import { Announcement, Employee, AuthService, AnnouncementReadStatus, Notification as NotificationEntity } from '@/api/supabaseEntities';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -33,7 +33,7 @@ export default function EmployeeAnnouncements() {
       setError(null);
       
       // Vérifier l'authentification
-      const user = await User.me();
+      const user = await AuthService.me();
       console.log('✅ User authenticated:', user.email);
       
       setCurrentUser(user);

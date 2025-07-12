@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CollaborativeEvent, CollaborationInvitation, Employee, User } from '@/api/entities';
+import { Employee, AuthService } from '@/api/supabaseEntities';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { AppSettings } from "@/api/entities";
+import { AppSettings } from "@/api/supabaseEntities";
 import { UploadFile } from "@/api/integrations";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

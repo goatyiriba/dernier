@@ -7,10 +7,21 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Camera, Edit, Palette } from "lucide-react";
-import { UploadFile } from '@/api/integrations';
 import AvatarGenerator from '../ui/AvatarGenerator';
 import AvatarSelector from '../ui/AvatarSelector';
 import { useToast } from "@/components/ui/use-toast";
+import { Employee } from "@/api/supabaseEntities";
+import { supabase } from "@/api/supabaseClient";
+
+// Fonction d'upload de fichier pour Supabase
+const uploadFile = async (file, path) => {
+  const { data, error } = await supabase.storage
+    .from('avatars')
+    .upload(path, file);
+  
+  if (error) throw error;
+  return data;
+};
 
 const departments = [
   "Engineering", "Marketing", "Sales", "HR", "Finance", "Operations", "Design", "Legal"

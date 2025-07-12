@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Badge, EmployeePoints, ActionLog, User } from '@/api/entities';
+import { AuthService } from '@/api/supabaseEntities';
 import { logAction, processEmployeeAchievements, processTimeViolations, processUnreadMessagesViolation } from './GamificationEngine';
 import NotificationHelper from '../notifications/NotificationHelper';
 

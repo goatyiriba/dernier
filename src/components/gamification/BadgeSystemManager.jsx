@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Badge as UIBadge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { 
   Award, 
@@ -25,7 +25,7 @@ import {
   Gift
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Badge as BadgeEntity, EmployeePoints } from '@/api/entities';
+import { AuthService } from '@/api/supabaseEntities';
 import { format } from "date-fns";
 
 // Configuration intelligente des badges avec icônes et couleurs
@@ -236,9 +236,9 @@ const SmartBadgeCard = ({ badge, isNew = false, onClick }) => {
             
             {/* Métadonnées */}
             <div className="flex justify-between items-center text-xs">
-              <Badge variant="outline" className="text-xs px-2 py-0">
+              <UIBadge variant="outline" className="text-xs px-2 py-0">
                 {config.category}
-              </Badge>
+              </UIBadge>
               <span className="text-gray-500">
                 {format(new Date(badge.earned_at), 'dd/MM/yy')}
               </span>
@@ -274,8 +274,8 @@ export default function BadgeSystemManager({ employeeId, showTitle = true }) {
       setIsLoading(true);
       
       // CORRECTION: Charger avec dédoublonnage strict
-      const employeeBadges = await BadgeEntity.filter({ employee_id: employeeId });
-      const pointsData = await EmployeePoints.filter({ employee_id: employeeId });
+      const employeeBadges = await AuthService.getEmployeeBadges(employeeId);
+      const pointsData = await AuthService.getEmployeePoints(employeeId);
       
       // Dédoublonnage des badges
       const uniqueBadges = [];
@@ -347,9 +347,9 @@ export default function BadgeSystemManager({ employeeId, showTitle = true }) {
           <div className="flex items-center gap-3">
             <Award className="w-6 h-6 text-yellow-500" />
             <h2 className="text-2xl font-bold text-gray-900">Mes Badges & Récompenses</h2>
-            <Badge className="bg-yellow-100 text-yellow-800">
+            <UIBadge className="bg-yellow-100 text-yellow-800">
               {totalBadges} badges
-            </Badge>
+            </UIBadge>
           </div>
           <Button variant="outline" onClick={loadBadgesData}>
             <CheckCircle className="w-4 h-4 mr-2" />
@@ -410,9 +410,9 @@ export default function BadgeSystemManager({ employeeId, showTitle = true }) {
               <Icon className="w-4 h-4" />
               {category.label}
               {count > 0 && (
-                <Badge variant="secondary" className="ml-1 px-1 py-0 text-xs">
+                <UIBadge variant="secondary" className="ml-1 px-1 py-0 text-xs">
                   {count}
-                </Badge>
+                </UIBadge>
               )}
             </Button>
           );

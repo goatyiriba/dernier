@@ -28,7 +28,7 @@ import {
   Gift,
   Loader
 } from "lucide-react";
-import { Employee, EmployeePoints, Badge as BadgeEntity, User } from '@/api/entities';
+import { Employee, AuthService } from "@/api/supabaseEntities";
 import { motion, AnimatePresence } from "framer-motion";
 import { format } from "date-fns";
 import AvatarGenerator from "../components/ui/AvatarGenerator";
@@ -82,7 +82,7 @@ export default function Leaderboard() {
       setError(null);
       
       // Vérifier l'authentification
-      const user = await User.me();
+      const user = await AuthService.me();
       console.log('✅ User authenticated:', user.email);
       
       setCurrentUser(user);

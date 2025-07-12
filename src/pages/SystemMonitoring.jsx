@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { SystemLog, SystemMetrics, SecurityAlert, User, Employee, TimeEntry, LeaveRequest } from "@/api/entities";
+import { Employee, TimeEntry, LeaveRequest, AuthService } from "@/api/supabaseEntities";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -95,7 +95,7 @@ export default function SystemMonitoring() {
   const generateInitialLogs = async () => {
     try {
       // Generate some initial system logs based on real data
-      const currentUsers = await User.list();
+      const currentUsers = await AuthService.list();
       const currentEmployees = await Employee.list();
       const currentTimeEntries = await TimeEntry.list();
 
@@ -164,7 +164,7 @@ export default function SystemMonitoring() {
       // Create system logs in batch
       for (const log of initialLogs.slice(0, 20)) { // Limit to avoid too many API calls
         try {
-          await SystemLog.create(log);
+          await AuthService.createLog(log);
         } catch (error) {
           console.warn("Could not create log:", error);
         }
@@ -201,7 +201,7 @@ export default function SystemMonitoring() {
           created_date: currentTime
         };
 
-        await SystemLog.create(newLog);
+        await AuthService.createLog(newLog);
       }
     } catch (error) {
       console.warn("Could not generate realtime log:", error);
@@ -213,10 +213,10 @@ export default function SystemMonitoring() {
       setIsLoading(true);
 
       const [logsData, metricsData, alertsData, usersData, employeesData, timeEntriesData, leaveRequestsData] = await Promise.all([
-        SystemLog.list("-created_date", 100),
-        SystemMetrics.list("-timestamp", 50),
-        SecurityAlert.list("-created_date", 20),
-        User.list(),
+        AuthService.listLogs("-created_date", 100),
+        AuthService.listMetrics("-timestamp", 50),
+        AuthService.listAlerts("-created_date", 20),
+        AuthService.listUsers(),
         Employee.list(),
         TimeEntry.list("-created_date", 50),
         LeaveRequest.list("-created_date", 30)

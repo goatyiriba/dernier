@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -27,6 +26,12 @@ import {
   FileText,
   Zap
 } from "lucide-react";
+
+// Import de toutes les functions adaptées
+const { sendEmailFunction } = require('../api/functions/notifications/sendEmail');
+const { openaiFunction } = require('../api/functions/integrations/openai');
+const { stripeFunction } = require('../api/functions/integrations/stripe');
+const { exportTasksFunction } = require('../api/functions/employees/export');
 
 export default function SelfHostingGuide({ copyToClipboard, copiedCode }) {
   const [activeHosting, setActiveHosting] = useState("overview");
@@ -1303,7 +1308,7 @@ module.exports = { authMiddleware, adminOnly };`}
                         <h4 className="font-semibold text-gray-900 mb-3">6. Adaptation Frontend</h4>
                         <div className="bg-gray-800 text-green-400 p-4 rounded-lg relative">
                           <pre className="text-sm overflow-x-auto">{`// Avant (avec Base44 Functions)
-import { someFunction } from "@/api/functions/someFunction";
+import { someFunction } from "@/api/supabaseFunctions";
 const response = await someFunction({param: "value"});
 
 // Après (Self-hosted)

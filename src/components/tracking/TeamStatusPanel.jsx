@@ -23,7 +23,7 @@ import { fr } from 'date-fns/locale';
 
 import UserStatusIndicator from './UserStatusIndicator';
 import ActivityHistoryModal from './ActivityHistoryModal';
-import { getTeamStatus } from '@/api/functions';
+import { getTeamStatus } from '@/api/supabaseFunctions';
 
 export default function TeamStatusPanel() {
   const [employees, setEmployees] = useState([]);

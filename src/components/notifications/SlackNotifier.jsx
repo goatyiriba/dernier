@@ -1,4 +1,4 @@
-import { sendSlackNotification } from "@/api/functions";
+import { sendSlackNotification } from "@/api/supabaseFunctions";
 
 export class SlackNotifier {
   static async sendLeaveRequest(leaveRequest, employee, settings) {

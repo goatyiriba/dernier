@@ -44,7 +44,7 @@ import {
   Sunset,
   Utensils
 } from "lucide-react";
-import { TimeEntry, Employee, User as UserEntity, TimeSettings } from '@/api/entities';
+import { TimeEntry, Employee, AuthService } from '@/api/supabaseEntities';
 import { motion, AnimatePresence } from "framer-motion";
 import { format, differenceInMinutes, differenceInHours, startOfWeek, endOfWeek, isToday } from "date-fns";
 import { fr } from "date-fns/locale";

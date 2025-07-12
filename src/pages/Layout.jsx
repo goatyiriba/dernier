@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { Employee, Notification, User, LeaveRequest, TimeEntry, Announcement, AnnouncementReadStatus, AppSettings } from "@/api/entities";
+import { Employee, LeaveRequest, TimeEntry, Announcement, AuthService } from "@/api/supabaseEntities";
 import {
   LayoutDashboard,
   Users,

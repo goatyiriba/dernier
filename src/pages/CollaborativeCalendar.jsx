@@ -39,7 +39,7 @@ import {
   Employee,
   User as UserEntity,
   Notification
-} from '@/api/entities';
+} from '@/api/supabaseEntities';
 import { motion, AnimatePresence } from "framer-motion";
 import { format, addDays, startOfWeek, endOfWeek, isToday, isSameDay, parseISO } from "date-fns";
 import { fr } from "date-fns/locale";

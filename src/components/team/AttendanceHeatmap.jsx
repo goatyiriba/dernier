@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TimeEntry } from '@/api/entities';
+import { TimeEntry } from '@/api/supabaseEntities';
 import {
   Tooltip,
   TooltipContent,

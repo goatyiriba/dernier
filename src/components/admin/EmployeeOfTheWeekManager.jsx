@@ -1,48 +1,281 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge as UIBadge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { 
-  Trophy, 
-  Star, 
-  Award, 
-  Plus, 
-  Edit, 
-  Trash2, 
-  Send, 
-  Check, 
-  X, 
-  Calendar,
-  Users,
-  TrendingUp,
-  MessageSquare,
-  Gift,
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Progress } from "@/components/ui/progress";
+import { Switch } from "@/components/ui/switch";
+import { Slider } from "@/components/ui/slider";
+import {
+  Award,
+  Star,
   Crown,
-  Sparkles,
+  Trophy,
   Target,
   Clock,
+  Users,
+  MessageCircle,
+  BookOpen,
+  Lightbulb,
+  UserCheck,
+  Flame,
+  CheckCircle,
+  ArrowUp,
+  Gift,
+  Sparkles,
+  TrendingUp,
+  Calendar,
+  Video,
+  Heart,
+  Wrench,
+  CheckCircle2,
+  GraduationCap,
+  FileText,
+  MessageSquare,
+  Send,
+  Sunrise,
+  Plus,
+  Edit,
+  Trash2,
+  Settings,
   BarChart3,
+  Users2,
+  Target as TargetIcon,
+  Clock as ClockIcon,
+  MessageCircle as MessageCircleIcon,
+  BookOpen as BookOpenIcon,
+  Lightbulb as LightbulbIcon,
+  Crown as CrownIcon,
+  TrendingUp as TrendingUpIcon,
+  Sparkles as SparklesIcon,
+  Coins,
+  TrendingDown,
+  Activity,
+  PieChart,
+  LineChart,
+  BarChart,
+  DollarSign,
+  Gift as GiftIcon,
+  ShoppingCart,
+  RefreshCw,
+  Filter,
+  Download,
+  Upload,
   Eye,
-  Upload
-} from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { format, startOfWeek, endOfWeek, addWeeks, subWeeks, isThisWeek } from "date-fns";
-import { fr } from "date-fns/locale";
-import { useToast } from "@/components/ui/use-toast";
-import { 
-  EmployeeOfTheWeek, 
-  Employee, 
-  EmployeePoints, 
-  TimeEntry, 
-  Announcement,
-  Notification
-} from '@/api/entities';
+  EyeOff,
+  Lock,
+  Unlock,
+  Shield,
+  ShieldCheck,
+  AlertTriangle,
+  Info,
+  HelpCircle,
+  Settings as SettingsIcon,
+  User,
+  UserPlus,
+  UserMinus,
+  UserCheck as UserCheckIcon,
+  UserX,
+  Users as UsersIcon,
+  UserCog,
+  UserEdit,
+  UserSearch,
+  UserTag,
+  UserVoice,
+  UserShield,
+  UserStar,
+  UserHeart,
+  UserSmile,
+  UserFrown,
+  UserMeh,
+  UserZap,
+  UserGear,
+  UserKey,
+  UserLock,
+  UserUnlock,
+  UserAlert,
+  UserBan,
+  UserCheck2,
+  UserClock,
+  UserCrown,
+  UserDollar,
+  UserEdit2,
+  UserMinus2,
+  UserPlus2,
+  UserSearch2,
+  UserSettings,
+  UserStar2,
+  UserTag2,
+  UserVoice2,
+  UserX2,
+  UserZap2,
+  UserGear2,
+  UserKey2,
+  UserLock2,
+  UserUnlock2,
+  UserAlert2,
+  UserBan2,
+  UserCheck3,
+  UserClock2,
+  UserCrown2,
+  UserDollar2,
+  UserEdit3,
+  UserMinus3,
+  UserPlus3,
+  UserSearch3,
+  UserSettings2,
+  UserStar3,
+  UserTag3,
+  UserVoice3,
+  UserX3,
+  UserZap3,
+  UserGear3,
+  UserKey3,
+  UserLock3,
+  UserUnlock3,
+  UserAlert3,
+  UserBan3,
+  UserCheck4,
+  UserClock3,
+  UserCrown3,
+  UserDollar3,
+  UserEdit4,
+  UserMinus4,
+  UserPlus4,
+  UserSearch4,
+  UserSettings3,
+  UserStar4,
+  UserTag4,
+  UserVoice4,
+  UserX4,
+  UserZap4,
+  UserGear4,
+  UserKey4,
+  UserLock4,
+  UserUnlock4,
+  UserAlert4,
+  UserBan4,
+  UserCheck5,
+  UserClock4,
+  UserCrown4,
+  UserDollar4,
+  UserEdit5,
+  UserMinus5,
+  UserPlus5,
+  UserSearch5,
+  UserSettings4,
+  UserStar5,
+  UserTag5,
+  UserVoice5,
+  UserX5,
+  UserZap5,
+  UserGear5,
+  UserKey5,
+  UserLock5,
+  UserUnlock5,
+  UserAlert5,
+  UserBan5,
+  Zap,
+  Bell,
+  BellOff,
+  BellRing,
+  BellPlus,
+  BellMinus,
+  BellX,
+  BellCheck,
+  BellAlert,
+  BellBan,
+  BellClock,
+  BellCrown,
+  BellDollar,
+  BellEdit,
+  BellMinus2,
+  BellPlus2,
+  BellSearch,
+  BellSettings,
+  BellStar,
+  BellTag,
+  BellVoice,
+  BellX2,
+  BellZap,
+  BellGear,
+  BellKey,
+  BellLock,
+  BellUnlock,
+  BellAlert2,
+  BellBan2,
+  BellCheck2,
+  BellClock2,
+  BellCrown2,
+  BellDollar2,
+  BellEdit2,
+  BellMinus3,
+  BellPlus3,
+  BellSearch2,
+  BellSettings2,
+  BellStar2,
+  BellTag2,
+  BellVoice2,
+  BellX3,
+  BellZap2,
+  BellGear2,
+  BellKey2,
+  BellLock2,
+  BellUnlock2,
+  BellAlert3,
+  BellBan3,
+  BellCheck3,
+  BellClock3,
+  BellCrown3,
+  BellDollar3,
+  BellEdit3,
+  BellMinus4,
+  BellPlus4,
+  BellSearch3,
+  BellSettings3,
+  BellStar3,
+  BellTag3,
+  BellVoice3,
+  BellX4,
+  BellZap3,
+  BellGear3,
+  BellKey3,
+  BellLock3,
+  BellUnlock3,
+  BellAlert4,
+  BellBan4,
+  BellCheck4,
+  BellClock4,
+  BellCrown4,
+  BellDollar4,
+  BellEdit4,
+  BellMinus5,
+  BellPlus5,
+  BellSearch4,
+  BellSettings4,
+  BellStar4,
+  BellTag4,
+  BellVoice4,
+  BellX5,
+  BellZap4,
+  BellGear4,
+  BellKey4,
+  BellLock4,
+  BellUnlock4,
+  BellAlert5,
+  BellBan5
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { format, startOfWeek, endOfWeek, isSameWeek, parseISO, addWeeks, subWeeks } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import AvatarGenerator from "../ui/AvatarGenerator";
+import { Employee, AuthService } from '@/api/supabaseEntities';
 
 export default function EmployeeOfTheWeekManager() {
   // États principaux
@@ -402,10 +635,10 @@ export default function EmployeeOfTheWeekManager() {
                     {format(startOfWeek(selectedWeek, { weekStartsOn: 1 }), 'd MMM', { locale: fr })} - 
                     {format(endOfWeek(selectedWeek, { weekStartsOn: 1 }), 'd MMM yyyy', { locale: fr })}
                   </div>
-                  {isThisWeek(selectedWeek) && (
-                    <Badge className="bg-green-100 text-green-800 text-xs mt-1">
+                  {isSameWeek(selectedWeek, new Date()) && (
+                    <UIBadge className="bg-green-100 text-green-800 text-xs mt-1">
                       Cette semaine
-                    </Badge>
+                    </UIBadge>
                   )}
                 </div>
                 <Button
@@ -499,10 +732,10 @@ export default function EmployeeOfTheWeekManager() {
                       )}
                       
                       {currentNomination.announcement_sent && (
-                        <Badge className="bg-green-100 text-green-800">
-                          <Check className="w-4 h-4 mr-1" />
+                        <UIBadge className="bg-green-100 text-green-800">
+                          <CheckCircle className="w-4 h-4 mr-1" />
                           Annoncé
-                        </Badge>
+                        </UIBadge>
                       )}
                       
                       <Button
@@ -571,7 +804,7 @@ export default function EmployeeOfTheWeekManager() {
                             {format(new Date(nomination.week_end_date), 'd MMM yyyy', { locale: fr })}
                           </p>
                           <div className="flex items-center gap-2 mt-1">
-                            <Badge className={`text-xs ${
+                            <UIBadge className={`text-xs ${
                               nomination.approval_status === 'approved' ? 'bg-green-100 text-green-800' :
                               nomination.approval_status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                               'bg-red-100 text-red-800'
@@ -579,7 +812,7 @@ export default function EmployeeOfTheWeekManager() {
                               {nomination.approval_status === 'approved' ? 'Approuvé' :
                                nomination.approval_status === 'pending' ? 'En attente' :
                                'Rejeté'}
-                            </Badge>
+                            </UIBadge>
                             <span className="text-xs text-gray-500">
                               Score: {nomination.performance_score}/100
                             </span>
@@ -589,10 +822,10 @@ export default function EmployeeOfTheWeekManager() {
                       
                       <div className="flex items-center gap-2">
                         {nomination.announcement_sent && (
-                          <Badge className="bg-blue-100 text-blue-800 text-xs">
+                          <UIBadge className="bg-blue-100 text-blue-800 text-xs">
                             <Send className="w-3 h-3 mr-1" />
                             Annoncé
-                          </Badge>
+                          </UIBadge>
                         )}
                         <Button
                           variant="ghost"
@@ -663,18 +896,19 @@ export default function EmployeeOfTheWeekManager() {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <Label className="text-base font-semibold mb-3 block">Sélection de l'employé</Label>
-                    <select
-                      value={selectedEmployee}
-                      onChange={(e) => handleEmployeeSelect(e.target.value)}
-                      className="w-full p-3 border rounded-lg bg-white"
-                    >
-                      <option value="">Choisir un employé...</option>
-                      {employees.map(employee => (
-                        <option key={employee.id} value={employee.id}>
-                          {employee.first_name} {employee.last_name} - {employee.department}
-                        </option>
-                      ))}
-                    </select>
+                    <Select onValueChange={handleEmployeeSelect} value={selectedEmployee}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Choisir un employé..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">Choisir un employé...</SelectItem>
+                        {employees.map(employee => (
+                          <SelectItem key={employee.id} value={employee.id}>
+                            {employee.first_name} {employee.last_name} - {employee.department}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                   
                   {selectedEmployee && (() => {
@@ -818,23 +1052,24 @@ export default function EmployeeOfTheWeekManager() {
                   <div className="grid md:grid-cols-3 gap-4">
                     <div>
                       <Label className="text-sm mb-1 block">Type</Label>
-                      <select
-                        value={nominationForm.reward_details.type}
-                        onChange={(e) => setNominationForm(prev => ({
-                          ...prev,
-                          reward_details: {
-                            ...prev.reward_details,
-                            type: e.target.value
-                          }
-                        }))}
-                        className="w-full p-2 border rounded"
-                      >
-                        <option value="points">Points</option>
-                        <option value="badge">Badge</option>
-                        <option value="gift">Cadeau</option>
-                        <option value="time_off">Temps libre</option>
-                        <option value="certificate">Certificat</option>
-                      </select>
+                      <Select onValueChange={(value) => setNominationForm(prev => ({
+                        ...prev,
+                        reward_details: {
+                          ...prev.reward_details,
+                          type: value
+                        }
+                      }))} value={nominationForm.reward_details.type}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Choisir un type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="points">Points</SelectItem>
+                          <SelectItem value="badge">Badge</SelectItem>
+                          <SelectItem value="gift">Cadeau</SelectItem>
+                          <SelectItem value="time_off">Temps libre</SelectItem>
+                          <SelectItem value="certificate">Certificat</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
                     <div>
                       <Label className="text-sm mb-1 block">Valeur</Label>

@@ -16,8 +16,7 @@ import {
   Loader,
   RefreshCw
 } from "lucide-react";
-import { Message, Conversation, Employee } from '@/api/entities';
-import { User as AuthService } from '@/api/entities';
+import { Message, Employee, AuthService } from '@/api/supabaseEntities';
 import { motion, AnimatePresence } from "framer-motion";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";

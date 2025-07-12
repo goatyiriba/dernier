@@ -38,7 +38,7 @@ import {
   Badge as BadgeEntity,
   Announcement,
   AnnouncementReadStatus
-} from '@/api/entities';
+} from '@/api/supabaseEntities';
 import { motion, AnimatePresence } from "framer-motion";
 import { format, isToday, startOfWeek, endOfWeek, differenceInDays } from "date-fns";
 import { fr } from "date-fns/locale";

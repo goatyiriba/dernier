@@ -23,8 +23,7 @@ import {
 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { EmployeePoints } from "@/api/entities";
-import { Badge as BadgeEntity } from "@/api/entities";
+import { AuthService } from "@/api/supabaseEntities";
 
 export default function EmployeePointsManager({ employees, employeePoints, badges, onUpdate }) {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -69,12 +68,12 @@ export default function EmployeePointsManager({ employees, employeePoints, badge
       const existingPoints = employeePoints.find(p => p.employee_id === selectedEmployee.id);
       
       if (existingPoints) {
-        await EmployeePoints.update(existingPoints.id, {
+        await AuthService.updateEmployeePoints(existingPoints.id, {
           total_points: Math.max(0, existingPoints.total_points + pointsAdjustment),
           points_this_month: existingPoints.points_this_month + (pointsAdjustment > 0 ? pointsAdjustment : 0)
         });
       } else {
-        await EmployeePoints.create({
+        await AuthService.createEmployeePoints({
           employee_id: selectedEmployee.id,
           total_points: Math.max(0, pointsAdjustment),
           level: 1,
@@ -118,7 +117,7 @@ export default function EmployeePointsManager({ employees, employeePoints, badge
     try {
       const badgeData = JSON.parse(selectedBadge);
       
-      await BadgeEntity.create({
+      await AuthService.createBadge({
         employee_id: selectedEmployee.id,
         badge_id: badgeData.badge_id,
         badge_name: badgeData.badge_name,
@@ -134,7 +133,7 @@ export default function EmployeePointsManager({ employees, employeePoints, badge
       // Ajouter les points du badge
       const existingPoints = employeePoints.find(p => p.employee_id === selectedEmployee.id);
       if (existingPoints) {
-        await EmployeePoints.update(existingPoints.id, {
+        await AuthService.updateEmployeePoints(existingPoints.id, {
           total_points: existingPoints.total_points + badgeData.points_value,
           badges_count: (existingPoints.badges_count || 0) + 1
         });

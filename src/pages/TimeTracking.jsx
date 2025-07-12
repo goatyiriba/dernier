@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TimeEntry, Employee, TimeSettings } from "@/api/entities";
+import { TimeEntry, Employee } from "@/api/supabaseEntities";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

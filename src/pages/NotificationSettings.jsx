@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from "react";
-import { NotificationSettings as NotificationSettingsEntity, Employee, User } from "@/api/entities";
+import { Employee, AuthService } from "@/api/supabaseEntities";
+import { NotificationSettings as NotificationSettingsEntity } from "@/api/supabaseEntities";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -68,8 +69,8 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { format } from "date-fns";
-import { testSlackNotification } from '@/api/functions';
-import { testTelegramNotification } from '@/api/functions';
+import { testSlackNotification } from '@/api/supabaseFunctions';
+import { testTelegramNotification } from '@/api/supabaseFunctions';
 
 // Helper component for testing notifications
 const NotificationTestButton = ({ platform, formData, employee, settings, toast, onTestComplete }) => {
@@ -263,7 +264,7 @@ export default function NotificationSettings() {
 
   const loadUserData = async () => {
     try {
-      const user = await User.me();
+      const user = await AuthService.me();
       setCurrentUser(user);
       setIsAdmin(user.role === 'admin' || user.email === 'syllacloud@gmail.com');
 

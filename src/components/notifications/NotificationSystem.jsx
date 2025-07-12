@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
-import { Notification, User } from "@/api/entities"; // Assuming User is still used, though not directly in the component's logic.
+import { AuthService } from "@/api/supabaseEntities";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -104,11 +104,7 @@ export default function NotificationSystem({ currentUser }) {
     try {
       // CORRECTION: Utiliser le cache API avec gestion d'erreur robuste
       // Directly using Notification.filter with new parameters
-      const userNotifications = await Notification.filter(
-        { user_id: currentUser.id },
-        '-created_date',
-        15 // Limit changed to 15
-      );
+      const userNotifications = await AuthService.getNotifications(currentUser.id);
       
       console.log(`📬 ${userNotifications?.length || 0} notifications trouvées`);
 
@@ -152,7 +148,7 @@ export default function NotificationSystem({ currentUser }) {
 
   const markAsRead = async (notificationId) => {
     try {
-      await Notification.update(notificationId, { is_read: true });
+      await AuthService.markNotificationAsRead(notificationId);
       
       // Optimistic UI update
       setNotifications(prev => 
@@ -189,7 +185,7 @@ export default function NotificationSystem({ currentUser }) {
       const unreadNotifications = notifications.filter(n => !n.is_read);
       
       for (const notification of unreadNotifications) {
-        await Notification.update(notification.id, { is_read: true });
+        await AuthService.markNotificationAsRead(notification.id);
       }
       
       setNotifications(prev => prev.map(n => ({ ...n, is_read: true })));
@@ -213,7 +209,7 @@ export default function NotificationSystem({ currentUser }) {
 
   const deleteNotification = async (notificationId) => {
     try {
-      await Notification.delete(notificationId);
+      await AuthService.deleteNotification(notificationId);
       
       setNotifications(prev => prev.filter(n => n.id !== notificationId));
       setUnreadCount(prev => {

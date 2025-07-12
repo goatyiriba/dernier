@@ -17,7 +17,7 @@ import { format, startOfWeek, endOfWeek, isThisWeek } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/utils";
-import { EmployeeOfTheWeek, Employee } from '@/api/entities';
+import { EmployeeOfTheWeek, Employee } from '@/api/supabaseEntities';
 import AvatarGenerator from "../ui/AvatarGenerator";
 
 export default function EmployeeOfTheWeekWidget({ compact = false }) {

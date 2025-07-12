@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { AppSettings, SystemMetrics, Employee, User } from "@/api/entities";
+import { Employee, AuthService } from "@/api/supabaseEntities";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -234,11 +234,11 @@ export default function PlatformCustomizer() {
     try {
       setIsLoading(true);
       
-      const user = await User.me();
+      const user = await AuthService.me();
       setCurrentUser(user);
 
       // Charger les paramètres actuels
-      const settingsList = await AppSettings.list();
+      const settingsList = await AuthService.getAppSettings();
       const activeSettings = settingsList.find(s => s.is_active) || createDefaultSettings();
       
       setSettings(activeSettings);
@@ -247,7 +247,7 @@ export default function PlatformCustomizer() {
       setIsDarkMode(activeSettings.enable_dark_mode || false);
 
       // Charger les statistiques
-      const employees = await Employee.list();
+      const employees = await AuthService.getEmployees();
       setEmployeeCount(employees.length);
 
     } catch (error) {
@@ -264,7 +264,7 @@ export default function PlatformCustomizer() {
 
   const checkSystemHealth = async () => {
     try {
-      const metrics = await SystemMetrics.list();
+      const metrics = await AuthService.getSystemMetrics();
       const latestMetrics = metrics.reduce((acc, metric) => {
         acc[metric.metric_name] = metric.value;
         return acc;
@@ -358,12 +358,12 @@ export default function PlatformCustomizer() {
       setIsSaving(true);
       
       if (settings.id) {
-        await AppSettings.update(settings.id, {
+        await AuthService.updateAppSettings(settings.id, {
           ...settings,
           custom_css: customCss
         });
       } else {
-        await AppSettings.create({
+        await AuthService.createAppSettings({
           ...settings,
           custom_css: customCss
         });

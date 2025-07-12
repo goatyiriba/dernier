@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Message, Conversation, Employee } from "@/api/entities";
+import { Message, Conversation, Employee } from "@/api/supabaseEntities";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

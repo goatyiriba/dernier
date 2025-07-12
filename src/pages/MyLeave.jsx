@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Employee, LeaveRequest, User } from '@/api/entities';
+import { Employee, LeaveRequest, AuthService } from '@/api/supabaseEntities';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -108,7 +108,7 @@ export default function MyLeave() {
   const loadData = async () => {
     setIsLoading(true);
     try {
-      const user = await User.me();
+      const user = await AuthService.me();
       if (user) {
         // Try to find employee by employee_id first, then by email
         let employeeData = null;

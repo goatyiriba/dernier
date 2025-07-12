@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Badge, EmployeePoints, ActionLog, Employee, User } from '@/api/entities';
+import { Employee, AuthService } from '@/api/supabaseEntities';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge as UIBadge } from "@/components/ui/badge";
@@ -133,7 +133,7 @@ export default function BadgeSystem({ employeeId, compact = false }) {
 
   const loadCurrentUser = async () => {
     try {
-      const user = await User.me();
+      const user = await AuthService.me();
       setCurrentUser(user);
     } catch (error) {
       console.error('Erreur chargement utilisateur:', error);
@@ -146,15 +146,12 @@ export default function BadgeSystem({ employeeId, compact = false }) {
       console.log('🏆 Chargement données badges pour employé:', employeeId);
 
       // Charger les badges de l'employé
-      const employeeBadges = await Badge.filter({ 
-        employee_id: employeeId,
-        is_active: true 
-      });
+      const employeeBadges = await AuthService.getEmployeeBadges(employeeId);
       console.log('📊 Badges trouvés:', employeeBadges.length);
       setBadges(employeeBadges);
 
       // Charger les points de l'employé
-      const pointsData = await EmployeePoints.filter({ employee_id: employeeId });
+      const pointsData = await AuthService.getEmployeePoints(employeeId);
       if (pointsData.length > 0) {
         setEmployeePoints(pointsData[0]);
         console.log('💎 Points employé:', pointsData[0].total_points);
@@ -178,7 +175,7 @@ export default function BadgeSystem({ employeeId, compact = false }) {
   const calculateNextBadges = async (empId) => {
     try {
       // Récupérer les actions de l'employé
-      const actions = await ActionLog.filter({ employee_id: empId });
+      const actions = await AuthService.getEmployeeActions(empId);
       const currentBadges = badges.map(b => b.badge_id);
       const upcomingBadges = [];
 

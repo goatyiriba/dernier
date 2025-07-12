@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { User } from '@/api/entities';
+import { AuthService } from '@/api/supabaseEntities';
 import UltraSecureGamificationEngine from './SmartGamificationEngine';
 
 // CORRECTION MAJEURE: Suppression totale de la gamification automatique sur login/navigation

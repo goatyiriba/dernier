@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://your-domain.com/sitemap.xml
+
+# Disallow admin and private routes
+Disallow: /admin/
+Disallow: /local-user-management
+Disallow: /login
+Disallow: /auth/
+
+# Allow public pages
+Allow: /home
+Allow: /PublicSurvey 

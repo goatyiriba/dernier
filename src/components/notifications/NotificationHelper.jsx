@@ -1,4 +1,4 @@
-import { Notification, User, Employee } from '@/api/entities';
+import { Employee, AuthService } from '@/api/supabaseEntities';
 
 class NotificationHelper {
   

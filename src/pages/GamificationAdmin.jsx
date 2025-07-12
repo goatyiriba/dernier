@@ -38,11 +38,10 @@ import {
 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { Employee } from "@/api/entities";  
-import { EmployeePoints } from "@/api/entities";
-import { Badge as BadgeEntity } from "@/api/entities";
-import { GamificationSettings } from "@/api/entities";
-import { User } from "@/api/entities"; // Added User import
+import { Employee, AuthService } from "@/api/supabaseEntities";
+import { EmployeePoints } from "@/api/supabaseEntities";
+import { Badge as BadgeEntity } from "@/api/supabaseEntities";
+import { GamificationSettings } from "@/api/supabaseEntities";
 
 import PointsRulesManager from "../components/gamification/PointsRulesManager";
 import BadgeSystemManager from "../components/gamification/BadgeSystemManager";
@@ -193,7 +192,7 @@ export default function GamificationAdmin() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${await User.getToken()}`
+          'Authorization': `Bearer ${await AuthService.getToken()}`
         },
         body: JSON.stringify({ date: checkDate })
       });

@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Announcement, Employee, AnnouncementReadStatus } from "@/api/entities";
+import { Announcement, Employee } from "@/api/supabaseEntities";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

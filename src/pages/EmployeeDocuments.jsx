@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Document, Employee, User } from '@/api/entities';
+import { Document, Employee, AuthService } from '@/api/supabaseEntities';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -54,7 +54,7 @@ export default function EmployeeDocuments() {
     try {
       console.log("Loading employee documents...");
       
-      const user = await User.me();
+      const user = await AuthService.me();
       setCurrentUser(user);
       console.log("Current user:", user);
       

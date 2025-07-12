@@ -9,8 +9,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Upload, FileText, X, Check, AlertCircle, Smartphone, Share2, RefreshCw } from "lucide-react";
-import { UploadFile } from "@/api/integrations"; // Keep UploadFile
 import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/api/supabaseClient";
+
+// Fonction d'upload de fichier pour Supabase
+const uploadFile = async (file, path) => {
+  const { data, error } = await supabase.storage
+    .from('documents')
+    .upload(path, file);
+  
+  if (error) throw error;
+  return data;
+};
 
 // The 'departments' array is no longer used for access level selection, as it's replaced by specific employee assignment.
 // const departments = ["Engineering", "Marketing", "Sales", "HR", "Finance", "Operations", "Design", "Legal"];
@@ -104,10 +114,10 @@ export default function UploadDocumentModal({
       
       let EmployeeModule;
       try {
-        // Try dynamic import from '@/api/entities'
-        EmployeeModule = await import('@/api/entities');
+        // Try dynamic import from '@/api/supabaseEntities'
+        EmployeeModule = await import('@/api/supabaseEntities');
       } catch (e) {
-        console.warn("Failed to import from '@/api/entities', trying '@/api/integrations'", e);
+        console.warn("Failed to import from '@/api/supabaseEntities', trying '@/api/integrations'", e);
         // Fallback to '@/api/integrations' if the new path fails
         EmployeeModule = await import('@/api/integrations');
       }
@@ -234,14 +244,15 @@ export default function UploadDocumentModal({
         });
       }, 200);
 
-      const result = await UploadFile({ file: file });
+      const path = `uploads/${Date.now()}-${file.name}`;
+      const { data } = await uploadFile(file, path);
       
       clearInterval(progressInterval);
       setUploadProgress(100);
       
       setFormData(prev => ({
         ...prev,
-        file_url: result.file_url,
+        file_url: data.publicUrl,
         file_type: file.type || file.name.split('.').pop().toLowerCase(),
         file_size: file.size
       }));

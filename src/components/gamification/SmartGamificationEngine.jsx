@@ -1,4 +1,4 @@
-import { Employee, EmployeePoints, Badge, ActionLog, TimeEntry, Announcement, AnnouncementReadStatus, Message, CollaborativeEvent } from '@/api/entities';
+import { Employee, AuthService } from '@/api/supabaseEntities';
 import { format, isToday, isThisWeek, isThisMonth, differenceInMinutes, parseISO, startOfDay, endOfDay } from 'date-fns';
 
 // CORRECTION MAJEURE: Système ultra-strict anti-doublons

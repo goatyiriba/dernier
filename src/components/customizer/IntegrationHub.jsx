@@ -227,7 +227,7 @@ export default function IntegrationHub({ settings, onSettingChange }) {
     
     try {
       // Utiliser la fonction backend pour éviter les problèmes CORS
-      const { sendSlackNotification } = await import("@/api/functions");
+      const { sendSlackNotification } = await import("@/api/supabaseFunctions");
       
       const testData = {
         webhook_url: activeWebhook.webhook_url,

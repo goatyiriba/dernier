@@ -1,25 +1,176 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { 
+  Palette, 
   Upload, 
-  Users, 
+  Camera, 
   Download, 
-  UserCheck,
-  Camera,
-  Sparkles,
-  CheckCircle,
-  RefreshCw,
-  Shuffle
+  Share2, 
+  RefreshCw, 
+  Sparkles, 
+  Star, 
+  Heart, 
+  Zap, 
+  Crown, 
+  Target, 
+  Users, 
+  MessageCircle, 
+  BookOpen, 
+  Lightbulb, 
+  UserCheck, 
+  Flame, 
+  CheckCircle, 
+  ArrowUp, 
+  Gift, 
+  TrendingUp, 
+  Calendar, 
+  Video, 
+  Wrench, 
+  CheckCircle2, 
+  GraduationCap, 
+  FileText, 
+  MessageSquare, 
+  Send, 
+  Sunrise,
+  X,
+  Check,
+  Settings,
+  Eye,
+  EyeOff,
+  Lock,
+  Unlock,
+  Shield,
+  ShieldCheck,
+  AlertTriangle,
+  Info,
+  HelpCircle,
+  Settings as SettingsIcon,
+  User,
+  UserPlus,
+  UserMinus,
+  UserCheck as UserCheckIcon,
+  UserX,
+  Users as UsersIcon,
+  UserCog,
+  UserEdit,
+  UserSearch,
+  UserTag,
+  UserVoice,
+  UserShield,
+  UserStar,
+  UserHeart,
+  UserSmile,
+  UserFrown,
+  UserMeh,
+  UserZap,
+  UserGear,
+  UserKey,
+  UserLock,
+  UserUnlock,
+  UserAlert,
+  UserBan,
+  UserCheck2,
+  UserClock,
+  UserCrown,
+  UserDollar,
+  UserEdit2,
+  UserMinus2,
+  UserPlus2,
+  UserSearch2,
+  UserSettings,
+  UserStar2,
+  UserTag2,
+  UserVoice2,
+  UserX2,
+  UserZap2,
+  UserGear2,
+  UserKey2,
+  UserLock2,
+  UserUnlock2,
+  UserAlert2,
+  UserBan2,
+  UserCheck3,
+  UserClock2,
+  UserCrown2,
+  UserDollar2,
+  UserEdit3,
+  UserMinus3,
+  UserPlus3,
+  UserSearch3,
+  UserSettings2,
+  UserStar3,
+  UserTag3,
+  UserVoice3,
+  UserX3,
+  UserZap3,
+  UserGear3,
+  UserKey3,
+  UserLock3,
+  UserUnlock3,
+  UserAlert3,
+  UserBan3,
+  UserCheck4,
+  UserClock3,
+  UserCrown3,
+  UserDollar3,
+  UserEdit4,
+  UserMinus4,
+  UserPlus4,
+  UserSearch4,
+  UserSettings3,
+  UserStar4,
+  UserTag4,
+  UserVoice4,
+  UserX4,
+  UserZap4,
+  UserGear4,
+  UserKey4,
+  UserLock4,
+  UserUnlock4,
+  UserAlert4,
+  UserBan4,
+  UserCheck5,
+  UserClock4,
+  UserCrown4,
+  UserDollar4,
+  UserEdit5,
+  UserMinus5,
+  UserPlus5,
+  UserSearch5,
+  UserSettings4,
+  UserStar5,
+  UserTag5,
+  UserVoice5,
+  UserX5,
+  UserZap5,
+  UserGear5,
+  UserKey5,
+  UserLock5,
+  UserUnlock5,
+  UserAlert5,
+  UserBan5
 } from "lucide-react";
-import { motion, AnimatePresence } from 'framer-motion';
-import { AVATAR_COLLECTIONS } from './AvatarGenerator';
-import { UploadFile } from '@/api/integrations';
+import { motion, AnimatePresence } from "framer-motion";
+import { AVATAR_COLLECTIONS } from "./AvatarGenerator";
+import { supabase } from "@/api/supabaseClient";
+
+// Fonction d'upload de fichier pour Supabase
+const uploadFile = async (file, path) => {
+  const { data, error } = await supabase.storage
+    .from('avatars')
+    .upload(path, file);
+  
+  if (error) throw error;
+  return data;
+};
 
 export default function AvatarSelector({ 
   isOpen, 
@@ -95,8 +246,8 @@ export default function AvatarSelector({
       
       if (selectedOption === 'upload' && uploadedFile) {
         // Upload du fichier
-        const { file_url } = await UploadFile({ file: uploadedFile });
-        finalAvatarUrl = file_url;
+        const { data } = await uploadFile(uploadedFile, `avatars/${uploadedFile.name}`);
+        finalAvatarUrl = data.path;
         finalStyle = "custom";
       } else if (selectedOption === 'gallery' && selectedAvatar) {
         // Avatar sélectionné de la galerie

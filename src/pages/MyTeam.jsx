@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useMemo } from "react";
-import { Employee, User, Notification, EmployeePoints } from "@/api/entities";
+import { Employee, AuthService } from "@/api/supabaseEntities";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -63,7 +63,7 @@ export default function MyTeamPage() {
 
     try {
       // Récupérer l'utilisateur actuel
-      currentUserData = await User.me();
+      currentUserData = await AuthService.me();
       setCurrentUser(currentUserData);
       console.log('👤 Utilisateur actuel:', currentUserData);
     } catch (userError) {
@@ -84,7 +84,7 @@ export default function MyTeamPage() {
     }
 
     try {
-      allUsers = await User.list();
+      allUsers = await AuthService.list();
       // Validation que allUsers est bien un tableau
       if (!Array.isArray(allUsers)) {
         console.error('❌ User.list() ne retourne pas un tableau:', allUsers);
@@ -322,7 +322,7 @@ export default function MyTeamPage() {
       
       // CORRECTION: Appel direct à l'entité Employee au lieu des fonctions complexes
       const employeesData = await Employee.list("-updated_date");
-      const usersData = await User.list();
+      const usersData = await AuthService.list();
       const { points, empDay, empWeek } = await _fetchGamificationData(); // Refresh gamification data
       
       if (Array.isArray(employeesData)) {
@@ -657,7 +657,7 @@ export default function MyTeamPage() {
       }
       
       // Aussi mettre à jour l'utilisateur
-      await User.update(currentUser.id, {
+      await AuthService.update(currentUser.id, {
         last_login: new Date().toISOString()
       });
       
@@ -723,7 +723,7 @@ export default function MyTeamPage() {
 
   const handleSubmitMeetingRequest = async (link) => {
     try {
-      const requester = await User.me();
+      const requester = await AuthService.me();
       const targetEmployee = selectedEmployeeForMeeting;
 
       if (!requester || !targetEmployee) {

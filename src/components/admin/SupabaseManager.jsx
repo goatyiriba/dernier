@@ -20,7 +20,7 @@ import {
   Key,
   Info
 } from 'lucide-react';
-import { supabaseConnection } from '@/api/functions';
+import { supabaseConnection } from '@/api/supabaseFunctions';
 
 export default function SupabaseManager() {
   const [isLoading, setIsLoading] = useState(false);
