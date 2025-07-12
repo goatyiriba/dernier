@@ -556,6 +556,222 @@ export const FinanceTransaction = {
   }
 };
 
+export const CollaborativeEvent = {
+  async getAll() {
+    const { data, error } = await supabase
+      .from('collaborative_events')
+      .select('*')
+      .order('created_date', { ascending: false });
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async getById(id) {
+    const { data, error } = await supabase
+      .from('collaborative_events')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async create(eventData) {
+    const { data, error } = await supabase
+      .from('collaborative_events')
+      .insert(eventData)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async update(id, updates) {
+    const { data, error } = await supabase
+      .from('collaborative_events')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async delete(id) {
+    const { error } = await supabase
+      .from('collaborative_events')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+    return true;
+  },
+
+  async list(orderBy = '-created_date') {
+    return this.getAll();
+  },
+
+  async filter(filters) {
+    let query = supabase.from('collaborative_events').select('*');
+    
+    Object.entries(filters).forEach(([key, value]) => {
+      query = query.eq(key, value);
+    });
+    
+    const { data, error } = await query;
+    if (error) throw error;
+    return data;
+  }
+};
+
+export const CollaborationInvitation = {
+  async getAll() {
+    const { data, error } = await supabase
+      .from('collaboration_invitations')
+      .select('*')
+      .order('created_date', { ascending: false });
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async getById(id) {
+    const { data, error } = await supabase
+      .from('collaboration_invitations')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async create(invitationData) {
+    const { data, error } = await supabase
+      .from('collaboration_invitations')
+      .insert(invitationData)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async update(id, updates) {
+    const { data, error } = await supabase
+      .from('collaboration_invitations')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async delete(id) {
+    const { error } = await supabase
+      .from('collaboration_invitations')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+    return true;
+  },
+
+  async list(orderBy = '-created_date') {
+    return this.getAll();
+  },
+
+  async filter(filters) {
+    let query = supabase.from('collaboration_invitations').select('*');
+    
+    Object.entries(filters).forEach(([key, value]) => {
+      query = query.eq(key, value);
+    });
+    
+    const { data, error } = await query;
+    if (error) throw error;
+    return data;
+  }
+};
+
+export const CollaborationComment = {
+  async getAll() {
+    const { data, error } = await supabase
+      .from('collaboration_comments')
+      .select('*')
+      .order('created_date', { ascending: false });
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async getById(id) {
+    const { data, error } = await supabase
+      .from('collaboration_comments')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async create(commentData) {
+    const { data, error } = await supabase
+      .from('collaboration_comments')
+      .insert(commentData)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async update(id, updates) {
+    const { data, error } = await supabase
+      .from('collaboration_comments')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+    
+    if (error) throw error;
+    return data;
+  },
+
+  async delete(id) {
+    const { error } = await supabase
+      .from('collaboration_comments')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw error;
+    return true;
+  },
+
+  async list(orderBy = '-created_date') {
+    return this.getAll();
+  },
+
+  async filter(filters) {
+    let query = supabase.from('collaboration_comments').select('*');
+    
+    Object.entries(filters).forEach(([key, value]) => {
+      query = query.eq(key, value);
+    });
+    
+    const { data, error } = await query;
+    if (error) throw error;
+    return data;
+  }
+};
+
 // Service d'authentification
 export const AuthService = {
   async signUp(email, password, userData = {}) {
@@ -615,5 +831,8 @@ export const all = {
   Event,
   Message,
   Survey,
-  FinanceTransaction
+  FinanceTransaction,
+  CollaborativeEvent,
+  CollaborationInvitation,
+  CollaborationComment
 }; 
