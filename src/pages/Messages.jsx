@@ -12,12 +12,12 @@ import {
   Users, 
   Clock,
   CheckCircle,
-  User,
   AlertCircle,
   Loader,
   RefreshCw
 } from "lucide-react";
-import { Message, Conversation, Employee, User } from '@/api/entities';
+import { Message, Conversation, Employee } from '@/api/entities';
+import { User as AuthService } from '@/api/entities';
 import { motion, AnimatePresence } from "framer-motion";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -87,7 +87,7 @@ export default function Messages() {
       
       // Step 1: Authentication
       console.log('🔐 Step 1: Authenticating user...');
-      const user = await User.me();
+      const user = await AuthService.me();
       console.log('✅ User authenticated:', {
         id: user.id,
         email: user.email,
@@ -126,7 +126,7 @@ export default function Messages() {
           console.warn('⚠️ Error loading employees:', err);
           return [];
         }),
-        User.list("-created_date", 200).catch(err => {
+        AuthService.list("-created_date", 200).catch(err => {
           console.warn('⚠️ Error loading users:', err);
           return [];
         })

@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useMemo } from "react";
-import { Employee, User, Notification, EmployeePoints, Leaderboard } from "@/api/entities";
+import { Employee, User, Notification, EmployeePoints } from "@/api/entities";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -137,19 +137,10 @@ export default function MyTeamPage() {
       points = [];
     }
 
-    try {
-      empDay = await Leaderboard.employeeOfTheDay();
-    } catch (dayError) {
-      console.warn("Could not fetch Employee of the Day:", dayError);
-      empDay = null;
-    }
-
-    try {
-      empWeek = await Leaderboard.employeeOfTheWeek();
-    } catch (weekError) {
-      console.warn("Could not fetch Employee of the Week:", weekError);
-      empWeek = null;
-    }
+    // TODO: Implement Employee of the Day/Week functionality
+    // For now, we'll set these to null
+    empDay = null;
+    empWeek = null;
     
     return { points, empDay, empWeek };
   };

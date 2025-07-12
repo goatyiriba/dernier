@@ -1524,7 +1524,7 @@ module.exports = {
                         <li>• Validez toutes les entrées utilisateur</li>
                         <li>• Implémentez le rate limiting</li>
                         <li>• Chiffrez les données sensibles</li>
-                        <li>• Utilisez des secrets forts (>32 caractères)</li>
+                                                  <li>• Utilisez des secrets forts (&gt;32 caractères)</li>
                         <li>• Activez les logs de sécurité</li>
                       </ul>
                     </div>

@@ -57,15 +57,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import { cachedApiCall, apiCache } from "./components/utils/apiCache";
+import { cachedApiCall, apiCache } from "@/components/utils/apiCache";
 
-import LanguageProvider, { useTranslation } from "./components/utils/i18n";
-import NotificationSystem from "./components/notifications/NotificationSystem";
-import MessageNotificationSystem from "./components/notifications/MessageNotificationSystem";
-import { globalLogger } from "./components/utils/globalLogger";
-import ActivityTracker from "./components/tracking/ActivityTracker";
-import LanguageSwitcher from "./components/ui/LanguageSwitcher";
-import AvatarGenerator from "./components/ui/AvatarGenerator";
+import LanguageProvider, { useTranslation } from "@/components/utils/i18n";
+import NotificationSystem from "@/components/notifications/NotificationSystem";
+import MessageNotificationSystem from "@/components/notifications/MessageNotificationSystem";
+import { globalLogger } from "@/components/utils/globalLogger";
+import ActivityTracker from "@/components/tracking/ActivityTracker";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
+import AvatarGenerator from "@/components/ui/AvatarGenerator";
 import { format } from 'date-fns';
 
 function LayoutContent({ children, currentPageName }) {
